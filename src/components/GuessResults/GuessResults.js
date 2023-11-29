@@ -1,13 +1,22 @@
 import React from "react";
+import Guess from "../Guess";
+import { range } from "../../utils";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 function GuessResults({ guessList }) {
-  const list = guessList.map((item) => (
-    <p key={crypto.randomUUID()} className="guess">
-      {item}
-    </p>
+  const guesses = range(0, NUM_OF_GUESSES_ALLOWED).map((number) => (
+    <Guess key={number} />
   ));
 
-  return <div className="guess-results">{list}</div>;
+  const list = guessList.map((item) => (
+    <Guess key={crypto.randomUUID()} item={item} />
+  ));
+
+  return (
+    <div className="guess-results">
+      {[...list, ...guesses].slice(0, NUM_OF_GUESSES_ALLOWED)}
+    </div>
+  );
 }
 
 export default GuessResults;
