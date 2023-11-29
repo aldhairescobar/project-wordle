@@ -1,12 +1,15 @@
 import React from "react";
 
 function Guess({ item }) {
+  // [{},{}]
+  // `cell ${status}`
+
   return (
     <>
       {item ? (
         <p className="guess">
-          {[...item].map((letter) => (
-            <span key={crypto.randomUUID()} className="cell">
+          {item.map(({ letter, status }) => (
+            <span key={crypto.randomUUID()} className={`cell ${status}`}>
               {letter}
             </span>
           ))}
