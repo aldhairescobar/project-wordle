@@ -4,6 +4,15 @@ function Guess({ item }) {
   // [{},{}]
   // `cell ${status}`
 
+  /* const [hasWon, setHasWon] = React.useState("");
+  console.log(item); */
+
+  /* if (item) {
+    const arr = item.filter((i) => i.status !== "correct");
+
+    arr.length > 0 ? setHasWon(true) : setHasWon("");
+  } */
+
   return (
     <>
       {item ? (

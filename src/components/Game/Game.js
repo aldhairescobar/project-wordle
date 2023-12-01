@@ -1,35 +1,46 @@
 import React from "react";
-// import { sample } from "../../utils";
-// import { WORDS } from "../../data";
+import { sample } from "../../utils";
+import { WORDS } from "../../data";
 import GuestInput from "../GuessInput";
 import GuestResults from "../GuessResults";
+import Banner from "../Banner";
 
 // Pick a random word on every pageload.
-// const answer = sample(WORDS);
+const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
-// console.info({ answer });
-
-/* 
-  In GuessInput component:
-
-  When user inputs a Guess word we need to validate it
-    Calling the checkGuess helper and returning the array with the result
-  Then we need to add the new array with the validation to the list of guesses instead of only the word
-
-  In Guess component:
-  Where are expecting the array of arrays with the validation
-
-*/
+console.info({ answer });
 
 function Game() {
+  const [userInput, setUserInput] = React.useState("");
   const [guessList, setGuessList] = React.useState([]);
+  /* const [userHasWon, setUserHasWon] = React.useState(false);
+  const [userHasLost, setUserHasLost] = React.useState(true); */
 
-  // [ [] ,[{},{}], [] ]
+  let userHasWon = false;
+  let userHasLost = false;
+  let isGameOver = false;
+
+  if (guessList.length <= 6 && userInput === answer) {
+    userHasWon = !userHasWon;
+    isGameOver = !isGameOver;
+  } else if (guessList.length === 6 && userInput !== answer) {
+    userHasLost = !userHasLost;
+    isGameOver = !isGameOver;
+  }
 
   return (
     <>
       <GuestResults guessList={guessList} />
-      <GuestInput guessList={guessList} setGuessList={setGuessList} />
+      <GuestInput
+        userInput={userInput}
+        setUserInput={setUserInput}
+        guessList={guessList}
+        setGuessList={setGuessList}
+        answer={answer}
+        isGameOver={isGameOver}
+      />
+      {userHasWon && <Banner numOfGuesses={guessList.length} />}
+      {userHasLost && <Banner answer={answer} />}
     </>
   );
 }
